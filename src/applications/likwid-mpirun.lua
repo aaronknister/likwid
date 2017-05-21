@@ -1865,10 +1865,16 @@ elseif ppn == 0 and np > 0 then
     if ppn == 0 then
         ppn = 1
     end
+    -- If available processes per node (ppn) are larger than the available slots on the hosts (ppn > maxppn)
+    -- and the total processes require multiple hosts (np > maxppn), sanitize ppn value to the slots 
+    -- available on the hosts. 
     if ppn > maxppn and np > maxppn then
         ppn = maxppn
-    elseif np < maxppn then
+    -- if all processes fit on a single host, use only a single host with np processes
+    elseif np <= maxppn then
         ppn = np
+    -- if the processes fit exactly on the host, use all slots. It should be able to change the previous 
+    -- elseif into np <= maxppn
     elseif maxppn == np then
         ppn = maxppn
     end
