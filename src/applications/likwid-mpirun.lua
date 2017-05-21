@@ -1873,10 +1873,6 @@ elseif ppn == 0 and np > 0 then
     -- if all processes fit on a single host, use only a single host with np processes
     elseif np <= maxppn then
         ppn = np
-    -- if the processes fit exactly on the host, use all slots. It should be able to change the previous 
-    -- elseif into np <= maxppn
-    elseif maxppn == np then
-        ppn = maxppn
     end
     if (ppn * givenNrNodes) < np then
         if #perf == 0 then
